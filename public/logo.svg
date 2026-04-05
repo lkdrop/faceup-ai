@@ -1,0 +1,16 @@
+<svg width="200" height="240" viewBox="0 0 30 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top crown -->
+  <path d="M15 1 L29 13 L15 15.5 L1 13 Z" fill="#FFAB55"/>
+  <!-- Left pavilion -->
+  <path d="M1 13 L15 15.5 L15 35 Z" fill="#FF7A1A"/>
+  <!-- Right pavilion -->
+  <path d="M29 13 L15 15.5 L15 35 Z" fill="#D96608"/>
+  <!-- Crown highlight -->
+  <path d="M15 1 L21.5 9 L15 15.5 L8.5 9 Z" fill="white" opacity="0.14"/>
+  <!-- Top-left facet -->
+  <path d="M1 13 L8.5 9 L15 1 L15 15.5 Z" fill="#FF8C2A"/>
+  <!-- Top-right facet -->
+  <path d="M29 13 L21.5 9 L15 1 L15 15.5 Z" fill="#FFBE75"/>
+  <!-- Girdle line -->
+  <line x1="1" y1="13" x2="29" y2="13" stroke="white" stroke-width="0.5" opacity="0.35"/>
+</svg>
