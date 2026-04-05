@@ -1,0 +1,1 @@
+{"version":"0.0.1","configurations":[{"name":"faceup-dev","runtimeExecutable":"npx","runtimeArgs":["next","dev","--port","3002"],"port":3002}]}

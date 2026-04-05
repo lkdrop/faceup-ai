@@ -38,31 +38,31 @@ const afterPhotos = [
   '/gallery/pair3_after.png',
 ]
 
-// Galeria — Unsplash verificados + Pexels (100% confiável)
+// Galeria — Astria AI-generated headshots (real results, high quality)
 const galleryIndividuos = [
-  `${U}1560250097-0b93528c311a${GQ}`,    // man tan blazer ✅
-  `${U}1573497019940-1c28c88b4f3e${GQ}`, // woman professional outdoors ✅
-  `${U}1573496359142-b8d87734a5a2${GQ}`, // dark hair formal woman ✅
-  `${U}1438761681033-6461ffad8d80${GQ}`, // blonde smiling woman ✅
-  `${U}1506794778202-cad84cf45f1d${GQ}`, // man professional ✅
-  `${U}1521119989659-a83eee488004${GQ}`, // woman headshot ✅
-  `${U}1534528741775-53994a69daeb${GQ}`, // woman professional ✅
-  `${U}1507003211169-0a1dd7228f2d${GQ}`, // man dark hair ✅
-  `${U}1500648767791-00dcc994a43e${GQ}`, // man outdoors smiling ✅
-  `${U}1472099645785-5658abf4ff4e${GQ}`, // man glasses smiling ✅
+  '/gallery/astria-elegant-woman.jpg',
+  '/gallery/astria-person.jpg',
+  '/gallery/astria-elegant-man.jpg',
+  '/gallery/astria-brand1.jpg',
+  '/gallery/astria-styled1.jpg',
+  '/gallery/astria-dating-woman.jpg',
+  '/gallery/astria-brand2.jpg',
+  '/gallery/astria-styled2.jpg',
+  '/gallery/astria-dating-man.jpg',
+  '/gallery/astria-winter1.jpg',
 ]
 
 const galleryEquipes = [
-  PX('1587009'),  // woman blazer professional
-  PX('2379004'),  // businesswoman glasses
-  PX('1181690'),  // man white shirt
-  PX('1181686'),  // woman outdoor professional
-  PX('774909'),   // woman portrait
-  PX('3785104'),  // woman white blouse
-  PX('1222271'),  // man seated
-  PX('3777931'),  // man beard professional
-  PX('2381069'),  // woman executive
-  PX('1516680'),  // man outdoor business
+  '/gallery/astria-elegant-woman.jpg',
+  '/gallery/astria-brand1.jpg',
+  '/gallery/astria-person.jpg',
+  '/gallery/astria-styled1.jpg',
+  '/gallery/astria-elegant-man.jpg',
+  '/gallery/astria-brand2.jpg',
+  '/gallery/astria-dating-woman.jpg',
+  '/gallery/astria-winter2.jpg',
+  '/gallery/astria-styled2.jpg',
+  '/gallery/astria-dating1.jpg',
 ]
 
 /* ── BRANDS ──────────────────────────────────────── */
@@ -325,9 +325,10 @@ export default function Home() {
           <div className="mb-14">
             <p className="text-sm font-black uppercase tracking-widest text-[#FF7A1A] mb-3">Como funciona</p>
             <h2 className="text-3xl md:text-4xl font-black text-[#111111] mb-2">
-              Tão fácil como <span className="text-[#FF7A1A]">1–2–3–4</span>. Suas fotos chegam em menos de 2h.
+              Do upload às suas fotos profissionais em{' '}
+              <span className="text-[#FF7A1A]">menos de 2 horas</span>.
             </h2>
-            <p className="text-neutral-500 text-lg">Envie selfies, escolha o estilo e receba até 100 fotos profissionais.</p>
+            <p className="text-neutral-500 text-lg">Envie selfies, escolha o estilo e nossa IA faz o resto.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
@@ -336,9 +337,9 @@ export default function Home() {
               <div className="p-4 bg-white border-b border-neutral-100">
                 <div className="flex gap-2">
                   {[
-                    { src: `${U}1573496359142-b8d87734a5a2${GQ}`, label: 'Profissional' },
-                    { src: `${U}1531746020798-e6953c6e8e04${GQ}`, label: 'Business' },
-                    { src: `${U}1494790108377-be9c29b29330${GQ}`, label: 'Smart casual' },
+                    { src: '/gallery/astria-elegant-woman.jpg', label: 'Profissional' },
+                    { src: '/gallery/astria-brand1.jpg', label: 'Business' },
+                    { src: '/gallery/astria-styled1.jpg', label: 'Smart Casual' },
                   ].map(({ src, label }, i) => (
                     <div key={i} className={`relative flex-1 aspect-[3/4] rounded-xl overflow-hidden bg-neutral-200 ${i === 1 ? 'ring-2 ring-[#FF7A1A]' : ''}`}>
                       <Image src={src} alt={label} fill className="object-cover" sizes="80px" quality={90} />
@@ -384,7 +385,7 @@ export default function Home() {
             <div className="bg-neutral-50 rounded-2xl overflow-hidden border border-neutral-100">
               <div className="p-4 bg-white border-b border-neutral-100">
                 <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-neutral-200 max-w-[140px] mx-auto">
-                  <Image src="/gallery/gemini_after.jpg" alt="gerando" fill className="object-cover" sizes="140px" quality={95} />
+                  <Image src="/gallery/astria-person.jpg" alt="gerando" fill className="object-cover" sizes="140px" quality={95} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-3">
                     <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1">
                       <div className="w-1.5 h-1.5 rounded-full bg-[#FF7A1A] animate-pulse" />
@@ -407,12 +408,12 @@ export default function Home() {
               <div className="p-4 bg-white border-b border-neutral-100">
                 <div className="grid grid-cols-3 gap-1.5">
                   {[
-                    PX('1587009'),
-                    PX('1181690'),
-                    PX('774909'),
-                    PX('3777931'),
-                    PX('1222271'),
-                    PX('3785104'),
+                    '/gallery/astria-elegant-woman.jpg',
+                    '/gallery/astria-brand1.jpg',
+                    '/gallery/astria-styled1.jpg',
+                    '/gallery/astria-elegant-man.jpg',
+                    '/gallery/astria-dating-woman.jpg',
+                    '/gallery/astria-brand2.jpg',
                   ].map((src, i) => (
                     <div key={i} className={`relative aspect-square rounded-lg overflow-hidden bg-neutral-200 ${i === 2 ? 'ring-2 ring-[#FF7A1A]' : ''}`}>
                       <Image src={src} alt="resultado" fill className="object-cover" sizes="60px" quality={80} />
