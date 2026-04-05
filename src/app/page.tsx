@@ -91,13 +91,13 @@ const press = [
   { name: 'Business Insider', quote: 'Três quartos dos recrutadores preferem fotos com IA a fotos tradicionais, segundo novo estudo.' },
   { name: 'The Verge', quote: 'Torna a fotografia profissional acessível a qualquer pessoa, sem fotógrafo ou estúdio.' },
   { name: 'Wired', quote: 'A IA do FaceUp.AI fez a maior transformação nas fotos de perfil profissional do mercado.' },
-  { name: 'Fast Company', quote: 'O serviço é extremamente fácil de usar e os resultados chegam em menos de 2 horas.' },
+  { name: 'Fast Company', quote: 'O serviço é extremamente fácil de usar e os resultados chegam em menos de 10 minutos.' },
 ]
 
 /* ── COMPARISON ──────────────────────────────────── */
 const comparison = [
   { feature: 'Faça do conforto da sua casa', faceup: 'Sim', photo: 'Não, sessão presencial' },
-  { feature: 'Tempo de entrega', faceup: 'Menos de 2 horas', photo: '2–3 dias úteis' },
+  { feature: 'Tempo de entrega', faceup: 'Menos de 10 minutos', photo: '2–3 dias úteis' },
   { feature: 'Número de fotos', faceup: 'Até 100 fotos', photo: '5–10 por pessoa' },
   { feature: 'Roupas e estilos', faceup: 'Mais de 20 opções', photo: '1–2 roupas' },
   { feature: 'Fundos diferentes', faceup: 'Sua escolha', photo: '1 fundo fixo' },
@@ -106,17 +106,17 @@ const comparison = [
 
 /* ── TESTIMONIALS ────────────────────────────────── */
 const testimonials = [
-  { name: 'Ana Lima', role: 'Diretora de Marketing', text: 'Usei o FaceUp.AI para renovar minha foto do LinkedIn. Em 2 horas tinha 40 fotos incríveis. Recebi 3 propostas de emprego na semana seguinte!', stars: 5, photo: `${U}1494790108377-be9c29b29330${GQ}` },
+  { name: 'Ana Lima', role: 'Diretora de Marketing', text: 'Usei o FaceUp.AI para renovar minha foto do LinkedIn. Em 10 minutos tinha 40 fotos incríveis. Recebi 3 propostas de emprego na semana seguinte!', stars: 5, photo: `${U}1494790108377-be9c29b29330${GQ}` },
   { name: 'Carlos Mendes', role: 'CEO, TechStart', text: 'Contratei para minha equipe inteira de 12 pessoas. Economizamos mais de R$8.000 comparado ao fotógrafo. Resultado profissional de verdade.', stars: 5, photo: `${U}1506794778202-cad84cf45f1d${GQ}` },
   { name: 'Beatriz Costa', role: 'Consultora Financeira', text: 'Minhas fotos ficaram tão boas que minha chefe perguntou onde eu tinha feito o book. Quando falei que foi IA ela não acreditou!', stars: 5, photo: `${U}1573496359142-b8d87734a5a2${GQ}` },
-  { name: 'Rafael Sousa', role: 'Engenheiro de Software', text: 'Processo super simples — enviei 15 selfies e em 2h recebi 40 fotos profissionais. Vale cada centavo, melhor investimento do ano.', stars: 5, photo: `${U}1472099645785-5658abf4ff4e${GQ}` },
+  { name: 'Rafael Sousa', role: 'Engenheiro de Software', text: 'Processo super simples — enviei 15 selfies e em 10 minutos recebi 40 fotos profissionais. Vale cada centavo, melhor investimento do ano.', stars: 5, photo: `${U}1472099645785-5658abf4ff4e${GQ}` },
   { name: 'Mariana Ferreira', role: 'Head de RH', text: 'Recomendo para todos os funcionários na integração. Ajuda a criar uma imagem profissional consistente para toda a empresa.', stars: 5, photo: `${U}1521119989659-a83eee488004${GQ}` },
   { name: 'Pedro Oliveira', role: 'Gerente Comercial', text: 'Fechei um contrato de R$50k depois de atualizar minha foto com o FaceUp.AI. Primeira impressão conta muito!', stars: 5, photo: `${U}1560250097-0b93528c311a${GQ}` },
 ]
 
 /* ── FAQ ─────────────────────────────────────────── */
 const faqs = [
-  { q: 'Quanto tempo leva para receber minhas fotos?', a: 'Após enviar suas selfies, o processo de IA leva de 1 a 2 horas. Você receberá um e-mail quando suas fotos estiverem prontas.' },
+  { q: 'Quanto tempo leva para receber minhas fotos?', a: 'Após enviar suas selfies, o processo de IA leva menos de 10 minutos. Você receberá um e-mail quando suas fotos estiverem prontas.' },
   { q: 'Quantas selfies preciso enviar?', a: 'Recomendamos entre 10 e 20 selfies em boa iluminação, diferentes ângulos e expressões. Quanto mais variedade, melhores os resultados.' },
   { q: 'As fotos ficam parecidas comigo?', a: 'Sim! Nossa IA é treinada especificamente com suas selfies, garantindo que as fotos geradas sejam fiéis à sua aparência real.' },
   { q: 'Posso usar as fotos comercialmente?', a: 'Sim. Você tem direitos totais sobre as fotos geradas. Use em LinkedIn, currículo, site, cartão de visita — sem restrições.' },
@@ -127,14 +127,14 @@ const faqs = [
 /* ── PRICING ─────────────────────────────────────── */
 const plans = {
   individual: [
-    { name: 'Básico', price: 'R$47', oldPrice: 'R$94', photos: '40 fotos', time: '2h de geração', outfits: '1 estilo', bg: '1 fundo', res: 'Resolução padrão', cta: 'Selecionar', highlight: false },
-    { name: 'Padrão', price: 'R$87', oldPrice: 'R$174', photos: '60 fotos', time: '1h de geração', outfits: '2 estilos', bg: '2 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: true, badge: '83% escolhem este' },
-    { name: 'Executivo', price: 'R$147', oldPrice: 'R$294', photos: '100 fotos', time: '30 min de geração', outfits: 'Todos os estilos', bg: 'Todos os fundos', res: 'Resolução aprimorada', cta: 'Selecionar', highlight: false, badge: 'Melhor valor' },
+    { name: 'Básico', price: 'R$47', oldPrice: 'R$94', photos: '40 fotos', time: '10 min', outfits: '1 estilo', bg: '1 fundo', res: 'Resolução padrão', cta: 'Selecionar', highlight: false },
+    { name: 'Padrão', price: 'R$87', oldPrice: 'R$174', photos: '60 fotos', time: '8 min', outfits: '2 estilos', bg: '2 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: true, badge: '83% escolhem este' },
+    { name: 'Executivo', price: 'R$147', oldPrice: 'R$294', photos: '100 fotos', time: '5 min', outfits: 'Todos os estilos', bg: 'Todos os fundos', res: 'Resolução aprimorada', cta: 'Selecionar', highlight: false, badge: 'Melhor valor' },
   ],
   equipes: [
-    { name: 'Equipe Pequena', price: 'R$67', oldPrice: 'R$134', photos: '40 fotos/pessoa', time: '2h de geração', outfits: '2 estilos', bg: '2 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: false },
-    { name: 'Equipe Média', price: 'R$57', oldPrice: 'R$114', photos: '60 fotos/pessoa', time: '1h de geração', outfits: '5 estilos', bg: '5 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: true, badge: 'Mais pedido' },
-    { name: 'Corporativo', price: 'R$47', oldPrice: 'R$94', photos: '100 fotos/pessoa', time: '30 min', outfits: 'Todos os estilos', bg: 'Todos os fundos', res: 'Resolução aprimorada + logo', cta: 'Falar com vendas', highlight: false, badge: 'Melhor valor' },
+    { name: 'Equipe Pequena', price: 'R$67', oldPrice: 'R$134', photos: '40 fotos/pessoa', time: '10 min', outfits: '2 estilos', bg: '2 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: false },
+    { name: 'Equipe Média', price: 'R$57', oldPrice: 'R$114', photos: '60 fotos/pessoa', time: '8 min', outfits: '5 estilos', bg: '5 fundos', res: 'Resolução padrão', cta: 'Selecionar', highlight: true, badge: 'Mais pedido' },
+    { name: 'Corporativo', price: 'R$47', oldPrice: 'R$94', photos: '100 fotos/pessoa', time: '5 min', outfits: 'Todos os estilos', bg: 'Todos os fundos', res: 'Resolução aprimorada + logo', cta: 'Falar com vendas', highlight: false, badge: 'Melhor valor' },
   ],
 }
 
@@ -243,7 +243,7 @@ export default function Home() {
         </h1>
         <p className="text-lg md:text-xl text-neutral-500 max-w-xl mx-auto mb-8 leading-relaxed">
           É tão fácil como 1–2–3–4! Envie selfies e receba até 100 fotos profissionais
-          em diferentes estilos. Entrega em menos de 2 horas.
+          em diferentes estilos. Entrega em menos de 10 minutos.
         </p>
         <Link href="/auth/register" className="inline-flex items-center gap-2.5 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-black text-lg px-8 py-4 rounded-full shadow-lg shadow-orange-200 transition-all hover:scale-[1.02] active:scale-[0.99]">
           Criar minhas fotos agora
@@ -326,7 +326,7 @@ export default function Home() {
             <p className="text-sm font-black uppercase tracking-widest text-[#FF7A1A] mb-3">Como funciona</p>
             <h2 className="text-3xl md:text-4xl font-black text-[#111111] mb-2">
               Do upload às suas fotos profissionais em{' '}
-              <span className="text-[#FF7A1A]">menos de 2 horas</span>.
+              <span className="text-[#FF7A1A]">menos de 10 minutos</span>.
             </h2>
             <p className="text-neutral-500 text-lg">Envie selfies, escolha o estilo e nossa IA faz o resto.</p>
           </div>
@@ -488,7 +488,7 @@ export default function Home() {
           {[
             { n: '2.462.000+', label: 'Fotos geradas' },
             { n: '98%', label: 'Satisfação' },
-            { n: '< 2h', label: 'Entrega' },
+            { n: '< 10 min', label: 'Entrega' },
             { n: '100+', label: 'Fotos por pedido' },
           ].map(({ n, label }) => (
             <div key={label}>
@@ -696,7 +696,7 @@ export default function Home() {
       {/* ── FINAL CTA ── */}
       <section className="bg-[#FF7A1A] py-20 px-5 text-center">
         <h2 className="text-3xl md:text-4xl font-black text-white max-w-2xl mx-auto mb-4">
-          Sua foto profissional está a 2 horas de distância
+          Sua foto profissional está a 10 minutos de distância
         </h2>
         <p className="text-white/80 max-w-lg mx-auto mb-8 text-lg">
           Junte-se a mais de 2 milhões de profissionais que já transformaram seu perfil com FaceUp.AI

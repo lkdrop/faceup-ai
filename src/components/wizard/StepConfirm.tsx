@@ -9,9 +9,9 @@ import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { toast } from 'sonner'
 
 const planDetails = {
-  essential:    { name: 'Essencial',    price: 49, photos: 40,  time: '45 min' },
-  professional: { name: 'Profissional', price: 69, photos: 80,  time: '30 min' },
-  premium:      { name: 'Premium',      price: 99, photos: 120, time: '20 min' },
+  essential:    { name: 'Essencial',    price: 49, photos: 40,  time: '10 min' },
+  professional: { name: 'Profissional', price: 69, photos: 80,  time: '8 min' },
+  premium:      { name: 'Premium',      price: 99, photos: 120, time: '5 min' },
 }
 
 type Step = 'idle' | 'uploading' | 'creating-checkout' | 'redirecting'
@@ -175,7 +175,7 @@ export default function StepConfirm() {
       {/* Guarantees */}
       <div className="flex flex-wrap justify-center gap-4 text-xs text-white/40 mb-8">
         <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-green-400" /> Garantia 7 dias</span>
-        <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#FF7A1A]" /> Pronto em {plan ? planDetails[plan].time : '30 min'}</span>
+        <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#FF7A1A]" /> Pronto em {plan ? planDetails[plan].time : '8 min'}</span>
         <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-yellow-400" /> Pagamento único</span>
       </div>
 
