@@ -3,19 +3,19 @@
 import { useCallback, useRef } from 'react'
 import { useWizardStore } from '@/lib/wizard-store'
 import NextButton from './NextButton'
-import { Upload, X, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { Upload, X, AlertCircle, CheckCircle2, Camera } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const MIN_PHOTOS = 6
-const MAX_PHOTOS = 12
+const MAX_PHOTOS = 15
 
 const tips = [
-  { label: 'Ângulos variados', desc: 'Frente, perfil e ¾' },
-  { label: 'Boa iluminação', desc: 'Luz natural funciona melhor' },
-  { label: 'Rosto visível', desc: 'Sem obstruções ou sombras fortes' },
-  { label: 'Expressões diversas', desc: 'Sorrindo e expressão neutra' },
-  { label: 'Sem filtros', desc: 'Fotos naturais dão melhores resultados' },
-  { label: 'Fundo simples', desc: 'Não precisa ser perfeito' },
+  { icon: '1', label: 'Rosto visível', desc: 'Sem óculos escuros ou chapéu' },
+  { icon: '2', label: 'Boa iluminação', desc: 'Luz natural é ideal' },
+  { icon: '3', label: 'Ângulos variados', desc: 'Frente, perfil e ¾' },
+  { icon: '4', label: 'Expressões diversas', desc: 'Sorrindo e neutro' },
+  { icon: '5', label: 'Sem filtros', desc: 'Fotos naturais, sem edição' },
+  { icon: '6', label: 'Só você na foto', desc: 'Sem outras pessoas' },
 ]
 
 export default function StepUpload() {
@@ -41,16 +41,16 @@ export default function StepUpload() {
 
   return (
     <div>
-      <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 7</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Envie suas fotos</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
-        {MIN_PHOTOS}–{MAX_PHOTOS} fotos do seu rosto. Quanto mais variadas, melhores os resultados.
+      <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 3 de 4</p>
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Envie suas selfies</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-8 leading-relaxed">
+        Envie {MIN_PHOTOS} a {MAX_PHOTOS} fotos do seu rosto. A IA aprende seus traços faciais para gerar retratos realistas.
       </p>
 
-      {/* Tips strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-8">
-        {tips.map((tip, i) => (
-          <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+      {/* Tips */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6 sm:mb-8">
+        {tips.map((tip) => (
+          <div key={tip.icon} className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#FF7A1A] mt-0.5 shrink-0" />
             <div>
               <p className="text-xs font-semibold text-white/60 leading-tight">{tip.label}</p>
@@ -60,48 +60,62 @@ export default function StepUpload() {
         ))}
       </div>
 
-      {/* Upload grid */}
+      {/* Upload area */}
       <div
         onDragOver={e => e.preventDefault()}
         onDrop={handleDrop}
-        className="grid grid-cols-3 sm:grid-cols-4 gap-2.5"
       >
-        {/* Uploaded photos */}
-        {photosPreviews.map((preview, i) => (
-          <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.06] group">
-            <img src={preview} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
-            <button
-              onClick={() => removePhoto(i)}
-              className="absolute top-1.5 right-1.5 w-5 h-5 bg-black/70 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
-            >
-              <X className="w-3 h-3 text-white" />
-            </button>
-          </div>
-        ))}
-
-        {/* Add button */}
-        {photos.length < MAX_PHOTOS && (
+        {/* Main drop zone when no photos */}
+        {photos.length === 0 && (
           <button
             onClick={() => inputRef.current?.click()}
-            className={cn(
-              'aspect-square rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 transition-all',
-              hasEnough
-                ? 'border-white/[0.08] hover:border-white/20 hover:bg-white/[0.03]'
-                : 'border-[#FF7A1A]/25 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08]'
-            )}
+            className="w-full flex flex-col items-center justify-center gap-4 py-16 rounded-2xl border-2 border-dashed border-[#FF7A1A]/25 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08] transition-all"
           >
-            <Upload className={cn('w-5 h-5', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')} />
-            <span className={cn('text-[10px] font-medium', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')}>
-              Adicionar
-            </span>
+            <div className="w-14 h-14 rounded-2xl bg-[#FF7A1A]/10 flex items-center justify-center">
+              <Camera className="w-7 h-7 text-[#FF7A1A]/60" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-semibold text-white/60">Clique para selecionar fotos</p>
+              <p className="text-xs text-white/25 mt-1">ou arraste e solte aqui</p>
+            </div>
+            <p className="text-[11px] text-white/20">JPG, PNG ou WebP — Mínimo {MIN_PHOTOS} fotos</p>
           </button>
         )}
 
-        {/* Empty placeholder slots */}
-        {Array.from({ length: Math.max(0, MIN_PHOTOS - photos.length - 1) }).map((_, i) => (
-          <div key={`empty-${i}`} className="aspect-square rounded-xl border border-dashed border-white/[0.05] bg-white/[0.01]" />
-        ))}
+        {/* Photo grid */}
+        {photos.length > 0 && (
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
+            {photosPreviews.map((preview, i) => (
+              <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.06] group">
+                <img src={preview} alt="" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
+                <button
+                  onClick={() => removePhoto(i)}
+                  className="absolute top-1.5 right-1.5 w-5 h-5 bg-black/70 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+                >
+                  <X className="w-3 h-3 text-white" />
+                </button>
+              </div>
+            ))}
+
+            {photos.length < MAX_PHOTOS && (
+              <button
+                onClick={() => inputRef.current?.click()}
+                className={cn(
+                  'aspect-square rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 transition-all',
+                  hasEnough
+                    ? 'border-white/[0.08] hover:border-white/20 hover:bg-white/[0.03]'
+                    : 'border-[#FF7A1A]/25 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08]'
+                )}
+              >
+                <Upload className={cn('w-5 h-5', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')} />
+                <span className={cn('text-[10px] font-medium', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')}>
+                  Adicionar
+                </span>
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <input
@@ -114,16 +128,18 @@ export default function StepUpload() {
       />
 
       {/* Counter */}
-      <div className="mt-5 flex items-center gap-2">
-        {hasEnough
-          ? <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-          : <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
-        }
-        <span className={cn('text-sm font-medium', hasEnough ? 'text-green-400' : 'text-amber-400')}>
-          {photos.length} de {MAX_PHOTOS} fotos
-          {!hasEnough && ` — adicione mais ${MIN_PHOTOS - photos.length}`}
-        </span>
-      </div>
+      {photos.length > 0 && (
+        <div className="mt-5 flex items-center gap-2">
+          {hasEnough
+            ? <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
+            : <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+          }
+          <span className={cn('text-sm font-medium', hasEnough ? 'text-green-400' : 'text-amber-400')}>
+            {photos.length} de {MAX_PHOTOS} fotos
+            {!hasEnough && ` — adicione mais ${MIN_PHOTOS - photos.length}`}
+          </span>
+        </div>
+      )}
 
       <NextButton disabled={!hasEnough} />
     </div>

@@ -7,37 +7,20 @@ import Link from 'next/link'
 import { Logo } from '@/components/logo'
 
 import StepGender from './StepGender'
-import StepAge from './StepAge'
-import StepHairLength from './StepHairLength'
-import StepHairColor from './StepHairColor'
-import StepEthnicity from './StepEthnicity'
-import StepBodyType from './StepBodyType'
+import StepStyle from './StepStyle'
 import StepUpload from './StepUpload'
-import StepGlasses from './StepGlasses'
-import StepBackgrounds from './StepBackgrounds'
-import StepOutfits from './StepOutfits'
 import StepConfirm from './StepConfirm'
 
-const TOTAL_STEPS = 11
+const TOTAL_STEPS = 4
 
 const steps = [
   { label: 'Gênero' },
-  { label: 'Idade' },
-  { label: 'Cabelo' },
-  { label: 'Cor do cabelo' },
-  { label: 'Etnia' },
-  { label: 'Corpo' },
+  { label: 'Estilo' },
   { label: 'Selfies' },
-  { label: 'Óculos' },
-  { label: 'Cenários' },
-  { label: 'Looks' },
   { label: 'Plano' },
 ]
 
-const stepComponents = [
-  StepGender, StepAge, StepHairLength, StepHairColor, StepEthnicity,
-  StepBodyType, StepUpload, StepGlasses, StepBackgrounds, StepOutfits, StepConfirm,
-]
+const stepComponents = [StepGender, StepStyle, StepUpload, StepConfirm]
 
 export default function WizardShell() {
   const { step, prevStep } = useWizardStore()
@@ -49,7 +32,7 @@ export default function WizardShell() {
 
       {/* ── Top bar ── */}
       <header className="sticky top-0 z-50 bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {step > 1 ? (
               <button
@@ -88,16 +71,15 @@ export default function WizardShell() {
       </header>
 
       {/* ── Body ── */}
-      <div className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-10 flex gap-12">
+      <div className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-10 flex gap-10">
 
         {/* Sidebar — desktop only */}
-        <aside className="hidden lg:block w-48 shrink-0 pt-1">
+        <aside className="hidden lg:block w-44 shrink-0 pt-1">
           <nav className="sticky top-24 flex flex-col gap-1">
             {steps.map((s, i) => {
               const n = i + 1
               const isDone = n < step
               const isCurrent = n === step
-              const isFuture = n > step
 
               return (
                 <div
