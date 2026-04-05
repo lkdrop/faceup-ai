@@ -1,15 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Logo } from '@/components/logo'
 import {
   ArrowRight, Check, Star, ChevronDown, Upload, Cpu, ImageIcon, Download,
-  Sparkles, Users, Briefcase, X, Shield, Lock, ExternalLink
+  Sparkles, Users, Briefcase, X, Shield, Lock, ExternalLink, LogOut, User
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Marquee } from '@/components/ui/marquee'
+import { createClient } from '@/lib/supabase-browser'
+import type { User as SupaUser } from '@supabase/supabase-js'
 
 /* ── PHOTOS — 100% local Astria results, zero external CDN ── */
 
@@ -191,6 +193,12 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 export default function Home() {
   const [galleryTab, setGalleryTab] = useState<'individuos' | 'equipes'>('individuos')
   const [pricingTab, setPricingTab] = useState<'individual' | 'equipes'>('individual')
+  const [user, setUser] = useState<SupaUser | null>(null)
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => setUser(data.user))
+  }, [])
   const galleryPhotos = galleryTab === 'individuos' ? galleryIndividuos : galleryEquipes
   const currentPlans = plans[pricingTab]
 
@@ -216,12 +224,26 @@ export default function Home() {
             <Link href="#faq" className="hover:text-[#111111] transition-colors">FAQ</Link>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/auth/login" className="hidden md:block text-sm font-medium text-neutral-600 hover:text-[#111111] transition-colors">
-              Entrar
-            </Link>
-            <Link href="/wizard" className="bg-[#FF7A1A] hover:bg-[#e86c10] text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
-              Começar grátis
-            </Link>
+            {user ? (
+              <>
+                <Link href="/wizard" className="hidden md:flex items-center gap-2 text-sm font-medium text-neutral-600 hover:text-[#111111] transition-colors">
+                  <User className="w-4 h-4" />
+                  {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
+                </Link>
+                <Link href="/wizard" className="bg-[#FF7A1A] hover:bg-[#e86c10] text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
+                  Criar fotos
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/auth/login" className="hidden md:block text-sm font-medium text-neutral-600 hover:text-[#111111] transition-colors">
+                  Entrar
+                </Link>
+                <Link href="/auth/register" className="bg-[#FF7A1A] hover:bg-[#e86c10] text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
+                  Começar grátis
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
