@@ -41,20 +41,20 @@ export default function StepUpload() {
 
   return (
     <div>
-      <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 3 de 4</p>
-      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Envie suas selfies</h2>
-      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-8 leading-relaxed">
+      <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-3">Passo 3 de 4</p>
+      <h2 className="text-2xl sm:text-3xl font-black text-[#111111] mb-2 tracking-tight">Envie suas selfies</h2>
+      <p className="text-sm sm:text-base text-neutral-500 mb-6 sm:mb-8 leading-relaxed">
         Envie {MIN_PHOTOS} a {MAX_PHOTOS} fotos do seu rosto. A IA aprende seus traços faciais para gerar retratos realistas.
       </p>
 
       {/* Tips */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6 sm:mb-8">
         {tips.map((tip) => (
-          <div key={tip.icon} className="flex items-start gap-2.5 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+          <div key={tip.icon} className="flex items-start gap-2.5 p-3 rounded-xl bg-white border border-neutral-200">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#FF7A1A] mt-0.5 shrink-0" />
             <div>
-              <p className="text-xs font-semibold text-white/60 leading-tight">{tip.label}</p>
-              <p className="text-[11px] text-white/25 mt-0.5 leading-tight">{tip.desc}</p>
+              <p className="text-xs font-semibold text-neutral-600 leading-tight">{tip.label}</p>
+              <p className="text-[11px] text-neutral-400 mt-0.5 leading-tight">{tip.desc}</p>
             </div>
           </div>
         ))}
@@ -69,16 +69,16 @@ export default function StepUpload() {
         {photos.length === 0 && (
           <button
             onClick={() => inputRef.current?.click()}
-            className="w-full flex flex-col items-center justify-center gap-4 py-16 rounded-2xl border-2 border-dashed border-[#FF7A1A]/25 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08] transition-all"
+            className="w-full flex flex-col items-center justify-center gap-4 py-16 rounded-2xl border-2 border-dashed border-[#FF7A1A]/30 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08] transition-all"
           >
             <div className="w-14 h-14 rounded-2xl bg-[#FF7A1A]/10 flex items-center justify-center">
               <Camera className="w-7 h-7 text-[#FF7A1A]/60" />
             </div>
             <div className="text-center">
-              <p className="text-sm font-semibold text-white/60">Clique para selecionar fotos</p>
-              <p className="text-xs text-white/25 mt-1">ou arraste e solte aqui</p>
+              <p className="text-sm font-semibold text-neutral-600">Clique para selecionar fotos</p>
+              <p className="text-xs text-neutral-400 mt-1">ou arraste e solte aqui</p>
             </div>
-            <p className="text-[11px] text-white/20">JPG, PNG ou WebP — Mínimo {MIN_PHOTOS} fotos</p>
+            <p className="text-[11px] text-neutral-400">JPG, PNG ou WebP — Mínimo {MIN_PHOTOS} fotos</p>
           </button>
         )}
 
@@ -86,12 +86,12 @@ export default function StepUpload() {
         {photos.length > 0 && (
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
             {photosPreviews.map((preview, i) => (
-              <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.06] group">
+              <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-neutral-200 group">
                 <img src={preview} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
                 <button
                   onClick={() => removePhoto(i)}
-                  className="absolute top-1.5 right-1.5 w-5 h-5 bg-black/70 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+                  className="absolute top-1.5 right-1.5 w-5 h-5 bg-black/60 hover:bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
                 >
                   <X className="w-3 h-3 text-white" />
                 </button>
@@ -104,12 +104,12 @@ export default function StepUpload() {
                 className={cn(
                   'aspect-square rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-1.5 transition-all',
                   hasEnough
-                    ? 'border-white/[0.08] hover:border-white/20 hover:bg-white/[0.03]'
-                    : 'border-[#FF7A1A]/25 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08]'
+                    ? 'border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50'
+                    : 'border-[#FF7A1A]/30 bg-[#FF7A1A]/[0.04] hover:bg-[#FF7A1A]/[0.08]'
                 )}
               >
-                <Upload className={cn('w-5 h-5', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')} />
-                <span className={cn('text-[10px] font-medium', hasEnough ? 'text-white/20' : 'text-[#FF7A1A]/50')}>
+                <Upload className={cn('w-5 h-5', hasEnough ? 'text-neutral-300' : 'text-[#FF7A1A]/50')} />
+                <span className={cn('text-[10px] font-medium', hasEnough ? 'text-neutral-300' : 'text-[#FF7A1A]/50')}>
                   Adicionar
                 </span>
               </button>
@@ -131,10 +131,10 @@ export default function StepUpload() {
       {photos.length > 0 && (
         <div className="mt-5 flex items-center gap-2">
           {hasEnough
-            ? <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-            : <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+            ? <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+            : <AlertCircle className="w-4 h-4 text-amber-500 shrink-0" />
           }
-          <span className={cn('text-sm font-medium', hasEnough ? 'text-green-400' : 'text-amber-400')}>
+          <span className={cn('text-sm font-medium', hasEnough ? 'text-green-600' : 'text-amber-500')}>
             {photos.length} de {MAX_PHOTOS} fotos
             {!hasEnough && ` — adicione mais ${MIN_PHOTOS - photos.length}`}
           </span>

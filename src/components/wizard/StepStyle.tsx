@@ -39,9 +39,9 @@ export default function StepStyle() {
 
   return (
     <div>
-      <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 2 de 4</p>
-      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Escolha o estilo</h2>
-      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
+      <p className="text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-3">Passo 2 de 4</p>
+      <h2 className="text-2xl sm:text-3xl font-black text-[#111111] mb-2 tracking-tight">Escolha o estilo</h2>
+      <p className="text-sm sm:text-base text-neutral-500 mb-6 sm:mb-10 leading-relaxed">
         Cada estilo gera fotos com roupas, poses e fundos diferentes.
       </p>
 
@@ -58,8 +58,8 @@ export default function StepStyle() {
               className={cn(
                 'relative flex flex-col sm:flex-row items-start gap-4 p-5 sm:p-6 rounded-2xl border transition-all duration-150 text-left w-full',
                 selected
-                  ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07] shadow-[0_0_0_1px_rgba(255,122,26,0.3)]'
-                  : 'border-white/[0.07] bg-white/[0.03] hover:border-white/[0.14] hover:bg-white/[0.05]'
+                  ? 'border-[#FF7A1A] bg-[#FF7A1A]/[0.06] shadow-[0_0_0_1px_rgba(255,122,26,0.2)]'
+                  : 'border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-sm'
               )}
             >
               {selected && (
@@ -69,7 +69,7 @@ export default function StepStyle() {
               )}
 
               {/* Preview image */}
-              <div className="relative w-full sm:w-28 h-36 sm:h-28 rounded-xl overflow-hidden shrink-0 border border-white/[0.06]">
+              <div className="relative w-full sm:w-28 h-36 sm:h-28 rounded-xl overflow-hidden shrink-0 border border-neutral-200">
                 <Image
                   src={pack.previewImage}
                   alt={pack.label}
@@ -82,17 +82,17 @@ export default function StepStyle() {
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className={cn('text-white/30', selected && 'text-[#FF7A1A]')}>
+                  <div className={cn('text-neutral-300', selected && 'text-[#FF7A1A]')}>
                     {packIcons[key]}
                   </div>
-                  <h3 className={cn('text-base font-bold', selected ? 'text-white' : 'text-white/70')}>
+                  <h3 className={cn('text-base font-bold', selected ? 'text-[#111111]' : 'text-neutral-700')}>
                     {pack.label}
                   </h3>
                 </div>
-                <p className="text-sm text-white/35 mb-3">{pack.description}</p>
+                <p className="text-sm text-neutral-400 mb-3">{pack.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {examples.map((ex, i) => (
-                    <span key={i} className="text-[11px] text-white/25 bg-white/[0.04] px-2 py-0.5 rounded-full">
+                    <span key={i} className="text-[11px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full">
                       {ex}
                     </span>
                   ))}
