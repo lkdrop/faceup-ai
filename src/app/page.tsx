@@ -11,13 +11,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { Marquee } from '@/components/ui/marquee'
 
-/* ── PHOTOS ─────────────────────────────────────── */
-const U = 'https://images.unsplash.com/photo-'
-const BQ = '?w=600&h=800&fit=crop&crop=face&q=90'
-const GQ = '?w=800&h=1067&fit=crop&crop=face&q=90'
-// Pexels — 100% confiável, sem CDN instável
-const PX = (id: string) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800&h=1067&fit=crop`
+/* ── PHOTOS — 100% local Astria results, zero external CDN ── */
 
 // Pares reais — mesma pessoa no antes e depois (sequência: mulher, homem, jovem)
 const beforePhotos = [
@@ -106,12 +100,12 @@ const comparison = [
 
 /* ── TESTIMONIALS ────────────────────────────────── */
 const testimonials = [
-  { name: 'Ana Lima', role: 'Diretora de Marketing', text: 'Usei o FaceUp.AI para renovar minha foto do LinkedIn. Em 10 minutos tinha 40 fotos incríveis. Recebi 3 propostas de emprego na semana seguinte!', stars: 5, photo: `${U}1494790108377-be9c29b29330${GQ}` },
-  { name: 'Carlos Mendes', role: 'CEO, TechStart', text: 'Contratei para minha equipe inteira de 12 pessoas. Economizamos mais de R$8.000 comparado ao fotógrafo. Resultado profissional de verdade.', stars: 5, photo: `${U}1506794778202-cad84cf45f1d${GQ}` },
-  { name: 'Beatriz Costa', role: 'Consultora Financeira', text: 'Minhas fotos ficaram tão boas que minha chefe perguntou onde eu tinha feito o book. Quando falei que foi IA ela não acreditou!', stars: 5, photo: `${U}1573496359142-b8d87734a5a2${GQ}` },
-  { name: 'Rafael Sousa', role: 'Engenheiro de Software', text: 'Processo super simples — enviei 15 selfies e em 10 minutos recebi 40 fotos profissionais. Vale cada centavo, melhor investimento do ano.', stars: 5, photo: `${U}1472099645785-5658abf4ff4e${GQ}` },
-  { name: 'Mariana Ferreira', role: 'Head de RH', text: 'Recomendo para todos os funcionários na integração. Ajuda a criar uma imagem profissional consistente para toda a empresa.', stars: 5, photo: `${U}1521119989659-a83eee488004${GQ}` },
-  { name: 'Pedro Oliveira', role: 'Gerente Comercial', text: 'Fechei um contrato de R$50k depois de atualizar minha foto com o FaceUp.AI. Primeira impressão conta muito!', stars: 5, photo: `${U}1560250097-0b93528c311a${GQ}` },
+  { name: 'Ana Lima', role: 'Diretora de Marketing', text: 'Usei o FaceUp.AI para renovar minha foto do LinkedIn. Em 10 minutos tinha 40 fotos incríveis. Recebi 3 propostas de emprego na semana seguinte!', stars: 5, photo: '/gallery/astria-elegant-woman.jpg' },
+  { name: 'Carlos Mendes', role: 'CEO, TechStart', text: 'Contratei para minha equipe inteira de 12 pessoas. Economizamos mais de R$8.000 comparado ao fotógrafo. Resultado profissional de verdade.', stars: 5, photo: '/gallery/astria-elegant-man.jpg' },
+  { name: 'Beatriz Costa', role: 'Consultora Financeira', text: 'Minhas fotos ficaram tão boas que minha chefe perguntou onde eu tinha feito o book. Quando falei que foi IA ela não acreditou!', stars: 5, photo: '/gallery/astria-dating-woman.jpg' },
+  { name: 'Rafael Sousa', role: 'Engenheiro de Software', text: 'Processo super simples — enviei 15 selfies e em 10 minutos recebi 40 fotos profissionais. Vale cada centavo, melhor investimento do ano.', stars: 5, photo: '/gallery/astria-dating-man.jpg' },
+  { name: 'Mariana Ferreira', role: 'Head de RH', text: 'Recomendo para todos os funcionários na integração. Ajuda a criar uma imagem profissional consistente para toda a empresa.', stars: 5, photo: '/gallery/astria-brand2.jpg' },
+  { name: 'Pedro Oliveira', role: 'Gerente Comercial', text: 'Fechei um contrato de R$50k depois de atualizar minha foto com o FaceUp.AI. Primeira impressão conta muito!', stars: 5, photo: '/gallery/astria-brand1.jpg' },
 ]
 
 /* ── FAQ ─────────────────────────────────────────── */
