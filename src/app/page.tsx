@@ -198,7 +198,7 @@ export default function Home() {
   useEffect(() => {
     const supabase = createClient()
     if (supabase) {
-      supabase.auth.getUser().then(({ data }) => setUser(data.user)).catch(() => {})
+      supabase.auth.getUser().then((res: { data: { user: SupaUser | null } }) => setUser(res.data.user)).catch(() => {})
     }
   }, [])
   const galleryPhotos = galleryTab === 'individuos' ? galleryIndividuos : galleryEquipes
