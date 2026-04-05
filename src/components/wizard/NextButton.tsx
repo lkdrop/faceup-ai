@@ -14,7 +14,7 @@ export default function NextButton({ disabled = false, label = 'Continuar', onCl
   const { nextStep } = useWizardStore()
 
   return (
-    <div className="mt-10 flex items-center gap-4">
+    <div className="mt-8 sm:mt-14 flex items-center gap-4">
       <button
         onClick={onClick || nextStep}
         disabled={disabled}

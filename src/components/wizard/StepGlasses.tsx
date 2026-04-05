@@ -6,7 +6,7 @@ import { Check } from 'lucide-react'
 import NextButton from './NextButton'
 
 const GlassesNoneIcon = () => (
-  <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+  <svg width="56" height="32" viewBox="0 0 40 24" fill="none">
     <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2"/>
     <circle cx="28" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2"/>
     <path d="M18 12h4" stroke="currentColor" strokeWidth="1.5"/>
@@ -14,7 +14,7 @@ const GlassesNoneIcon = () => (
 )
 
 const GlassesRegularIcon = () => (
-  <svg width="44" height="20" viewBox="0 0 44 20" fill="none">
+  <svg width="60" height="28" viewBox="0 0 44 20" fill="none">
     <rect x="2" y="3" width="16" height="14" rx="6" stroke="currentColor" strokeWidth="1.5"/>
     <rect x="26" y="3" width="16" height="14" rx="6" stroke="currentColor" strokeWidth="1.5"/>
     <path d="M18 10h8" stroke="currentColor" strokeWidth="1.5"/>
@@ -24,7 +24,7 @@ const GlassesRegularIcon = () => (
 )
 
 const GlassesSunIcon = () => (
-  <svg width="44" height="20" viewBox="0 0 44 20" fill="none">
+  <svg width="60" height="28" viewBox="0 0 44 20" fill="none">
     <rect x="2" y="3" width="16" height="14" rx="4" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1.5"/>
     <rect x="26" y="3" width="16" height="14" rx="4" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1.5"/>
     <path d="M18 10h8" stroke="currentColor" strokeWidth="1.5"/>
@@ -45,12 +45,12 @@ export default function StepGlasses() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 8</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Usa óculos?</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Usa óculos?</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Selecione se quer aparecer com óculos nas fotos.
       </p>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
         {options.map(opt => {
           const selected = glasses === opt.value
           return (
@@ -58,7 +58,7 @@ export default function StepGlasses() {
               key={opt.value}
               onClick={() => setGlasses(opt.value)}
               className={cn(
-                'relative flex flex-col items-center gap-4 py-7 px-4 rounded-xl border transition-all duration-150',
+                'relative flex flex-col items-center gap-3 py-6 px-3 sm:gap-4 sm:py-12 sm:px-4 rounded-2xl border transition-all duration-150',
                 selected
                   ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07] text-[#FF7A1A]'
                   : 'border-white/[0.07] bg-white/[0.03] text-white/25 hover:border-white/[0.14] hover:text-white/40'
@@ -71,8 +71,8 @@ export default function StepGlasses() {
               )}
               {opt.icon}
               <div className="text-center">
-                <p className={cn('text-sm font-semibold', selected ? 'text-white' : 'text-white/60')}>{opt.label}</p>
-                <p className="text-[11px] text-white/25 mt-0.5">{opt.description}</p>
+                <p className={cn('text-base font-bold', selected ? 'text-white' : 'text-white/60')}>{opt.label}</p>
+                <p className="text-xs text-white/30 mt-1">{opt.description}</p>
               </div>
             </button>
           )

@@ -50,8 +50,8 @@ export default function StepBackgrounds() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 9</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Escolha os cenários</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Escolha os cenários</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Selecione os fundos que quer nas suas fotos.
         {selected.length > 0 && (
           <span className="ml-1.5 px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 text-xs font-medium">
@@ -60,7 +60,7 @@ export default function StepBackgrounds() {
         )}
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
         {backgroundList.map(bgKey => {
           const isSelected = selected.includes(bgKey)
           const isDisabled = !isSelected && selected.length >= maxBgs
@@ -81,7 +81,7 @@ export default function StepBackgrounds() {
               )}
             >
               {/* Swatch preview */}
-              <div className={cn('h-16 w-full', config.swatch)} />
+              <div className={cn('h-20 sm:h-28 w-full', config.swatch)} />
 
               {/* Label */}
               <div className={cn(
@@ -91,7 +91,7 @@ export default function StepBackgrounds() {
                 <p className={cn('text-sm font-semibold leading-tight', isSelected ? 'text-white' : 'text-white/60')}>
                   {config.label}
                 </p>
-                <p className="text-[11px] text-white/25 mt-0.5">{config.desc}</p>
+                <p className="text-xs text-white/30 mt-1">{config.desc}</p>
               </div>
 
               {/* Selected badge */}

@@ -19,12 +19,12 @@ export default function StepAge() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 2</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Qual sua faixa etária?</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Qual sua faixa etária?</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Garante que a IA preserve sua aparência real nas fotos geradas.
       </p>
 
-      <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-3">
         {options.map(opt => {
           const selected = ageRange === opt.value
           return (
@@ -32,7 +32,7 @@ export default function StepAge() {
               key={opt.value}
               onClick={() => setAgeRange(opt.value)}
               className={cn(
-                'relative flex flex-col items-center justify-center py-5 rounded-xl border transition-all duration-150',
+                'relative flex flex-col items-center justify-center py-6 sm:py-10 rounded-2xl border transition-all duration-150',
                 selected
                   ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07]'
                   : 'border-white/[0.07] bg-white/[0.03] hover:border-white/[0.14] hover:bg-white/[0.05]'
@@ -43,10 +43,10 @@ export default function StepAge() {
                   <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />
                 </div>
               )}
-              <span className={cn('text-base font-bold tracking-tight', selected ? 'text-white' : 'text-white/60')}>
+              <span className={cn('text-2xl font-black tracking-tight', selected ? 'text-white' : 'text-white/60')}>
                 {opt.label}
               </span>
-              <span className="text-[10px] text-white/25 mt-0.5">anos</span>
+              <span className="text-xs text-white/25 mt-1">anos</span>
             </button>
           )
         })}

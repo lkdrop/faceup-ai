@@ -199,8 +199,8 @@ export default function Home() {
 
       {/* ── TOP BAR ── */}
       <div className="bg-[#111111] text-white text-center text-sm py-2.5 px-4">
-        🎉 <strong>Promoção de lançamento:</strong> 50% OFF nos primeiros 3 dias —{' '}
-        <Link href="/auth/register" className="underline underline-offset-2 hover:no-underline">
+        <strong>Promoção de lançamento:</strong> 50% OFF nos primeiros 3 dias —{' '}
+        <Link href="/wizard" className="underline underline-offset-2 hover:no-underline">
           Aproveitar agora →
         </Link>
       </div>
@@ -219,7 +219,7 @@ export default function Home() {
             <Link href="/auth/login" className="hidden md:block text-sm font-medium text-neutral-600 hover:text-[#111111] transition-colors">
               Entrar
             </Link>
-            <Link href="/auth/register" className="bg-[#FF7A1A] hover:bg-[#e86c10] text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
+            <Link href="/wizard" className="bg-[#FF7A1A] hover:bg-[#e86c10] text-white text-sm font-bold px-4 py-2 rounded-full transition-colors">
               Começar grátis
             </Link>
           </div>
@@ -229,17 +229,16 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="bg-[#FDF8F3] pt-16 pb-8 text-center px-5">
         <div className="inline-flex items-center gap-2 bg-white border border-neutral-200 rounded-full px-4 py-1.5 text-sm text-neutral-600 shadow-sm mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-[#FF7A1A]" />
           <span>Mais de <strong className="text-[#111111]">2.462.000</strong> fotos geradas</span>
         </div>
         <h1 className="text-[2.8rem] md:text-[4rem] leading-[1.08] font-black text-[#111111] max-w-3xl mx-auto mb-5">
           Obtenha suas fotos de retrato em <span className="text-[#FF7A1A] italic">minutos</span>, não em dias.
         </h1>
         <p className="text-lg md:text-xl text-neutral-500 max-w-xl mx-auto mb-8 leading-relaxed">
-          É tão fácil como 1–2–3–4! Envie selfies e receba até 100 fotos profissionais
-          em diferentes estilos. Entrega em menos de 10 minutos.
+          Envie algumas selfies e receba até 100 fotos profissionais
+          em diferentes estilos e fundos. Entrega em menos de 10 minutos.
         </p>
-        <Link href="/auth/register" className="inline-flex items-center gap-2.5 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-black text-lg px-8 py-4 rounded-full shadow-lg shadow-orange-200 transition-all hover:scale-[1.02] active:scale-[0.99]">
+        <Link href="/wizard" className="inline-flex items-center gap-2.5 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-black text-lg px-8 py-4 rounded-full shadow-lg shadow-orange-200 transition-all hover:scale-[1.02] active:scale-[0.99]">
           Criar minhas fotos agora
           <ArrowRight className="w-5 h-5" />
         </Link>
@@ -428,7 +427,7 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-10">
-            <Link href="/auth/register" className="inline-flex items-center gap-2 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-black px-7 py-3.5 rounded-full transition-all hover:scale-[1.02]">
+            <Link href="/wizard" className="inline-flex items-center gap-2 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-black px-7 py-3.5 rounded-full transition-all hover:scale-[1.02]">
               Criar minhas fotos agora <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -448,7 +447,7 @@ export default function Home() {
               </h2>
               <p className="text-neutral-500 mt-2">Fotos reais geradas para nossos clientes reais. Veja os resultados por si mesmo.</p>
             </div>
-            <Link href="/auth/register" className="shrink-0 inline-flex items-center gap-2 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-bold px-5 py-2.5 rounded-full text-sm transition-colors">
+            <Link href="/wizard" className="shrink-0 inline-flex items-center gap-2 bg-[#FF7A1A] hover:bg-[#e86c10] text-white font-bold px-5 py-2.5 rounded-full text-sm transition-colors">
               Crie suas fotos agora <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -568,13 +567,13 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/auth/register" className={`w-full text-center py-3 rounded-full font-black text-sm transition-all ${highlight ? 'bg-white text-[#FF7A1A] hover:bg-orange-50' : 'bg-[#FF7A1A] text-white hover:bg-[#e86c10]'}`}>
+                <Link href="/wizard" className={`w-full text-center py-3 rounded-full font-black text-sm transition-all ${highlight ? 'bg-white text-[#FF7A1A] hover:bg-orange-50' : 'bg-[#FF7A1A] text-white hover:bg-[#e86c10]'}`}>
                   {cta}
                 </Link>
               </div>
             ))}
           </div>
-          <p className="text-center text-neutral-500 text-sm mt-8">🔒 Pagamento seguro · Garantia de 7 dias · Suporte em português</p>
+          <p className="text-center text-neutral-500 text-sm mt-8">Pagamento seguro · Garantia de 7 dias · Suporte em português</p>
         </div>
       </section>
 
@@ -695,7 +694,7 @@ export default function Home() {
         <p className="text-white/80 max-w-lg mx-auto mb-8 text-lg">
           Junte-se a mais de 2 milhões de profissionais que já transformaram seu perfil com FaceUp.AI
         </p>
-        <Link href="/auth/register" className="inline-flex items-center gap-2.5 bg-white text-[#FF7A1A] font-black text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.99] transition-all">
+        <Link href="/wizard" className="inline-flex items-center gap-2.5 bg-white text-[#FF7A1A] font-black text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.99] transition-all">
           Criar minhas fotos agora
           <ArrowRight className="w-5 h-5" />
         </Link>
@@ -729,7 +728,7 @@ export default function Home() {
           </div>
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-2">
             <p className="text-neutral-500 text-sm">© 2024 FaceUp.AI — Todos os direitos reservados</p>
-            <p className="text-neutral-600 text-xs">Made with ❤️ for the world</p>
+            <p className="text-neutral-600 text-xs">© FaceUp.AI — Tecnologia de IA para retratos profissionais</p>
           </div>
         </div>
       </footer>

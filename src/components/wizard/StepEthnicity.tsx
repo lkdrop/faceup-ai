@@ -32,12 +32,12 @@ export default function StepEthnicity() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 5</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Qual sua etnia?</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Qual sua etnia?</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Ajuda a IA a preservar fielmente os traços do seu rosto.
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {options.map(opt => {
           const selected = ethnicity === opt.value
           return (
@@ -45,7 +45,7 @@ export default function StepEthnicity() {
               key={opt.value}
               onClick={() => setEthnicity(opt.value)}
               className={cn(
-                'relative flex items-center gap-3 p-3.5 rounded-xl border transition-all duration-150',
+                'relative flex items-center gap-3 p-3.5 sm:gap-4 sm:p-5 rounded-2xl border transition-all duration-150',
                 selected
                   ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07]'
                   : 'border-white/[0.07] bg-white/[0.03] hover:border-white/[0.14] hover:bg-white/[0.05]'
@@ -57,10 +57,10 @@ export default function StepEthnicity() {
                 </div>
               )}
               <div
-                className="w-7 h-7 rounded-full shrink-0 border border-white/10"
+                className="w-10 h-10 rounded-full shrink-0 border border-white/10"
                 style={{ backgroundColor: skinTones[opt.value] }}
               />
-              <span className={cn('text-sm font-medium leading-tight', selected ? 'text-white' : 'text-white/60')}>
+              <span className={cn('text-base font-semibold leading-tight', selected ? 'text-white' : 'text-white/60')}>
                 {opt.label}
               </span>
             </button>

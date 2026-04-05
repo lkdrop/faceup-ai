@@ -20,12 +20,12 @@ export default function StepHairColor() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 4</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Cor do cabelo</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Cor do cabelo</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Selecione a cor mais próxima do seu cabelo natural.
       </p>
 
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
         {options.map(opt => {
           const selected = hairColor === opt.value
           const isGradient = opt.color.startsWith('linear')
@@ -34,13 +34,13 @@ export default function StepHairColor() {
               key={opt.value}
               onClick={() => setHairColor(opt.value)}
               className={cn(
-                'flex flex-col items-center gap-3 py-4 px-2 rounded-xl border transition-all duration-150',
+                'flex flex-col items-center gap-3 py-5 px-2 sm:gap-4 sm:py-7 sm:px-3 rounded-2xl border transition-all duration-150',
                 selected
                   ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07]'
                   : 'border-white/[0.07] bg-white/[0.03] hover:border-white/[0.14]'
               )}
             >
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-white/10">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border border-white/10">
                 <div
                   className="w-full h-full"
                   style={isGradient

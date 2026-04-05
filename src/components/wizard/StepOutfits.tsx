@@ -36,8 +36,8 @@ export default function StepOutfits() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 10</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Estilos de roupa</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Estilos de roupa</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Escolha os looks que quer nas fotos.
         {selected.length > 0 && (
           <span className="ml-1.5 px-2 py-0.5 rounded-full bg-white/[0.06] text-white/50 text-xs font-medium">
@@ -46,7 +46,7 @@ export default function StepOutfits() {
         )}
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
         {filteredOptions.map(outfit => {
           const isSelected = selected.includes(outfit.value)
           const isDisabled = !isSelected && selected.length >= maxOutfits
@@ -67,7 +67,7 @@ export default function StepOutfits() {
             >
               {/* Fabric color swatch */}
               <div
-                className="h-14 w-full"
+                className="h-16 sm:h-24 w-full"
                 style={{ backgroundColor: outfit.swatch }}
               >
                 {/* Subtle texture overlay */}
@@ -84,7 +84,7 @@ export default function StepOutfits() {
                 <p className={cn('text-sm font-semibold leading-tight', isSelected ? 'text-white' : 'text-white/60')}>
                   {outfit.label}
                 </p>
-                <p className="text-[11px] text-white/25 mt-0.5">{outfit.desc}</p>
+                <p className="text-xs text-white/30 mt-1">{outfit.desc}</p>
               </div>
 
               {/* Selected badge */}

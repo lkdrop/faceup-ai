@@ -50,12 +50,12 @@ export default function StepBodyType() {
   return (
     <div>
       <p className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3">Passo 6</p>
-      <h2 className="text-2xl font-bold mb-1.5 tracking-tight">Tipo de corpo</h2>
-      <p className="text-sm text-white/40 mb-8 leading-relaxed">
+      <h2 className="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Tipo de corpo</h2>
+      <p className="text-sm sm:text-base text-white/40 mb-6 sm:mb-10 leading-relaxed">
         Para que as roupas caiam naturalmente nas fotos.
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {options.map(opt => {
           const selected = bodyType === opt.value
           return (
@@ -63,7 +63,7 @@ export default function StepBodyType() {
               key={opt.value}
               onClick={() => setBodyType(opt.value)}
               className={cn(
-                'relative flex flex-col items-center gap-4 pt-8 pb-5 px-3 rounded-xl border transition-all duration-150',
+                'relative flex flex-col items-center gap-3 pt-8 pb-5 px-3 sm:gap-4 sm:pt-12 sm:pb-8 rounded-2xl border transition-all duration-150',
                 selected
                   ? 'border-[#FF7A1A]/60 bg-[#FF7A1A]/[0.07] text-[#FF7A1A]'
                   : 'border-white/[0.07] bg-white/[0.03] text-white/25 hover:border-white/[0.14] hover:text-white/40'
@@ -76,8 +76,8 @@ export default function StepBodyType() {
               )}
               {BodyIcons[opt.value]}
               <div className="text-center">
-                <p className={cn('text-sm font-semibold', selected ? 'text-white' : 'text-white/60')}>{opt.label}</p>
-                <p className="text-[11px] text-white/25 mt-0.5">{opt.description}</p>
+                <p className={cn('text-base font-bold', selected ? 'text-white' : 'text-white/60')}>{opt.label}</p>
+                <p className="text-xs text-white/30 mt-1">{opt.description}</p>
               </div>
             </button>
           )
