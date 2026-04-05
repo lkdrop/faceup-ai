@@ -14,19 +14,23 @@ export default function NextButton({ disabled = false, label = 'Continuar', onCl
   const { nextStep } = useWizardStore()
 
   return (
-    <div className="mt-8 flex justify-center">
+    <div className="mt-10 flex items-center gap-4">
       <button
         onClick={onClick || nextStep}
         disabled={disabled}
         className={cn(
-          'flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm transition-all',
+          'flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-sm transition-all duration-150',
           disabled
-            ? 'bg-white/5 text-white/20 cursor-not-allowed'
-            : 'bg-gradient-to-r from-[#FF7A1A] to-[#FFB340] text-[#0A0A0A] hover:shadow-lg hover:shadow-orange-500/20 hover:scale-[1.02] active:scale-[0.98]'
+            ? 'bg-white/[0.04] text-white/20 cursor-not-allowed'
+            : 'bg-[#FF7A1A] text-white hover:bg-[#FF8C36] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,122,26,0.25)]'
         )}
       >
-        {label} <ArrowRight className="w-4 h-4" />
+        {label}
+        <ArrowRight className="w-4 h-4" />
       </button>
+      {disabled && (
+        <p className="text-xs text-white/25">Selecione uma opção para continuar</p>
+      )}
     </div>
   )
 }

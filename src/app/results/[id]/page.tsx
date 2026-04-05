@@ -4,13 +4,10 @@ import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Logo } from '@/components/logo'
-import {
-  Download, CheckCircle2, Loader2, Clock, Sparkles,
-  Image as ImageIcon, ArrowRight, Share2
-} from 'lucide-react'
-import { ShimmerButton } from '@/components/ui/shimmer-button'
+import { Download, Loader2, ArrowRight, ImageIcon, CheckCircle2, Share2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 
 interface OrderResult {
   id: string
@@ -21,299 +18,270 @@ interface OrderResult {
   tuneId: string | null
 }
 
-const statusMessages: Record<string, { title: string; desc: string; icon: React.ReactNode }> = {
-  pending: {
-    title: 'Processando pagamento…',
-    desc: 'Aguarde enquanto confirmamos seu pagamento.',
-    icon: <Clock className="w-8 h-8 text-white/40" />,
-  },
-  paid: {
-    title: 'Pagamento confirmado!',
-    desc: 'Iniciando o treinamento do modelo. Isso leva cerca de 20 minutos.',
-    icon: <CheckCircle2 className="w-8 h-8 text-green-400" />,
-  },
-  training: {
-    title: 'Treinando modelo de IA…',
-    desc: 'Estamos personalizando o modelo com suas fotos. Fique à vontade para fechar esta aba — enviaremos um email quando as fotos ficarem prontas.',
-    icon: <Loader2 className="w-8 h-8 text-[#FF7A1A] animate-spin" />,
-  },
-  generating: {
-    title: 'Gerando suas fotos…',
-    desc: 'O modelo já foi treinado! Agora estamos gerando suas fotos profissionais.',
-    icon: <Sparkles className="w-8 h-8 text-[#FF7A1A] animate-pulse" />,
-  },
-  done: {
-    title: 'Suas fotos estão prontas! 🎉',
-    desc: 'Clique em qualquer foto para baixar em alta resolução.',
-    icon: <CheckCircle2 className="w-8 h-8 text-green-400" />,
-  },
-  failed: {
-    title: 'Ocorreu um erro',
-    desc: 'Entre em contato com nosso suporte. Seu dinheiro será reembolsado integralmente.',
-    icon: <Loader2 className="w-8 h-8 text-red-400" />,
-  },
-}
+const POLL_INTERVAL = 15_000
 
-const POLL_INTERVAL = 15_000 // 15 seconds
+const statusConfig: Record<string, {
+  label: string
+  description: string
+  progress: number
+}> = {
+  pending:    { label: 'Processando pagamento',        description: 'Confirmando seu pagamento via Stripe.',                                      progress: 8  },
+  paid:       { label: 'Pagamento confirmado',         description: 'Iniciando o treinamento do modelo de IA.',                                   progress: 15 },
+  training:   { label: 'Treinando modelo',             description: 'A IA está aprendendo com suas fotos. Esse processo leva alguns minutos.',     progress: 45 },
+  generating: { label: 'Gerando suas fotos',           description: 'Modelo treinado. Gerando suas fotos profissionais agora.',                    progress: 80 },
+  done:       { label: 'Fotos prontas',                description: '',                                                                           progress: 100 },
+  failed:     { label: 'Ocorreu um erro',              description: 'Entre em contato com o suporte. Seu pagamento será reembolsado.',             progress: 0  },
+}
 
 export default function ResultsPage({ params }: { params: { id: string } }) {
   const [order, setOrder] = useState<OrderResult | null>(null)
   const [loading, setLoading] = useState(true)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [lightbox, setLightbox] = useState<string | null>(null)
 
   const fetchOrder = useCallback(async () => {
     try {
       const res = await fetch(`/api/results?order_id=${params.id}`)
-      if (!res.ok) throw new Error('Order not found')
-      const data = await res.json()
-      setOrder(data)
-    } catch {
-      // silently ignore — will retry
-    } finally {
+      if (!res.ok) throw new Error('Not found')
+      setOrder(await res.json())
+    } catch { /* silent */ } finally {
       setLoading(false)
     }
   }, [params.id])
 
-  useEffect(() => {
-    fetchOrder()
-  }, [fetchOrder])
+  useEffect(() => { fetchOrder() }, [fetchOrder])
 
-  // Poll while not done
   useEffect(() => {
     if (order?.status === 'done' || order?.status === 'failed') return
-    const interval = setInterval(fetchOrder, POLL_INTERVAL)
-    return () => clearInterval(interval)
+    const t = setInterval(fetchOrder, POLL_INTERVAL)
+    return () => clearInterval(t)
   }, [order?.status, fetchOrder])
 
-  const handleDownloadAll = async () => {
-    if (!order?.resultImages.length) return
-    toast.info('Iniciando download de todas as fotos…')
-
-    for (let i = 0; i < order.resultImages.length; i++) {
-      const url = order.resultImages[i]
-      try {
-        const res = await fetch(url)
-        const blob = await res.blob()
-        const a = document.createElement('a')
-        a.href = URL.createObjectURL(blob)
-        a.download = `faceup-ai-${i + 1}.jpg`
-        a.click()
-        URL.revokeObjectURL(a.href)
-        // Small delay between downloads
-        await new Promise(r => setTimeout(r, 200))
-      } catch {
-        // skip failed
-      }
-    }
-    toast.success('Download concluído!')
-  }
-
-  const handleDownloadOne = async (url: string, index: number) => {
+  const downloadOne = async (url: string, index: number) => {
     try {
-      const res = await fetch(url)
-      const blob = await res.blob()
+      const blob = await (await fetch(url)).blob()
       const a = document.createElement('a')
       a.href = URL.createObjectURL(blob)
-      a.download = `faceup-ai-${index + 1}.jpg`
+      a.download = `faceup-ai-photo-${index + 1}.jpg`
       a.click()
       URL.revokeObjectURL(a.href)
-    } catch {
-      toast.error('Falha ao baixar imagem.')
+    } catch { toast.error('Falha no download.') }
+  }
+
+  const downloadAll = async () => {
+    if (!order?.resultImages.length) return
+    toast.info(`Baixando ${order.resultImages.length} fotos...`)
+    for (let i = 0; i < order.resultImages.length; i++) {
+      await downloadOne(order.resultImages[i], i)
+      await new Promise(r => setTimeout(r, 150))
     }
+    toast.success('Download concluído.')
   }
 
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-[#FF7A1A] animate-spin" />
+        <Loader2 className="w-6 h-6 text-white/30 animate-spin" />
       </div>
     )
   }
 
   if (!order) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-4 text-white">
-        <p className="text-white/50">Pedido não encontrado.</p>
-        <Link href="/" className="text-[#FF7A1A] hover:underline">Voltar ao início</Link>
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-3 text-white">
+        <p className="text-white/40 text-sm">Pedido não encontrado.</p>
+        <Link href="/" className="text-[#FF7A1A] text-sm hover:underline">Voltar ao início</Link>
       </div>
     )
   }
 
-  const info = statusMessages[order.status] || statusMessages.pending
+  const config = statusConfig[order.status] ?? statusConfig.pending
+  const isDone = order.status === 'done'
+  const isFailed = order.status === 'failed'
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
+
       {/* Nav */}
-      <nav className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <Link href="/"><Logo size={30} dark /></Link>
-        <p className="text-xs text-white/30">Pedido #{order.id.slice(0, 8)}</p>
+      <nav className="sticky top-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+          <Link href="/"><Logo size={28} dark /></Link>
+          <p className="text-xs text-white/25 font-mono">#{order.id.slice(0, 8).toUpperCase()}</p>
+        </div>
       </nav>
 
       <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Status Header */}
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">{info.icon}</div>
-          <h1 className="text-3xl font-black mb-3">{info.title}</h1>
-          <p className="text-white/50 max-w-md mx-auto">{info.desc}</p>
 
-          {/* Progress bar for training/generating */}
-          {(order.status === 'training' || order.status === 'generating') && (
-            <div className="mt-6 max-w-xs mx-auto">
-              <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-[#FF7A1A] to-[#FFB340] rounded-full"
-                  animate={{ width: order.status === 'generating' ? '80%' : '45%' }}
-                  transition={{ duration: 2, ease: 'easeInOut' }}
-                />
-              </div>
-              <p className="text-xs text-white/30 mt-2">
-                {order.status === 'training'
-                  ? 'Treinamento em andamento… (~20 min)'
-                  : 'Gerando fotos… (~5 min)'}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Images grid */}
-        {order.status === 'done' && order.resultImages.length > 0 && (
-          <>
-            {/* Download all button */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-              <p className="text-white/50 text-sm">
-                {order.resultImages.length} fotos prontas para download
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    const url = `${window.location.origin}/results/${order.id}`
-                    navigator.clipboard.writeText(url)
-                    toast.success('Link copiado!')
-                  }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-sm font-medium transition"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Compartilhar
-                </button>
-                <ShimmerButton
-                  onClick={handleDownloadAll}
-                  className="text-sm font-bold px-6 py-2.5"
-                  shimmerColor="#FFB340"
-                  background="#FF7A1A"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Baixar todas ({order.resultImages.length})
-                </ShimmerButton>
-              </div>
+        {/* Status block */}
+        {!isDone && (
+          <div className="max-w-lg mx-auto mb-16 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.07] mb-6">
+              {isFailed ? (
+                <div className="w-2 h-2 rounded-full bg-red-500" />
+              ) : (
+                <div className="w-2 h-2 rounded-full bg-[#FF7A1A] animate-pulse" />
+              )}
+              <span className="text-sm font-medium text-white/60">{config.label}</span>
             </div>
 
-            {/* Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-              <AnimatePresence>
-                {order.resultImages.map((url, i) => (
+            <p className="text-white/40 text-sm leading-relaxed max-w-sm mx-auto mb-8">
+              {config.description}
+            </p>
+
+            {/* Progress bar */}
+            {!isFailed && (
+              <div className="max-w-xs mx-auto">
+                <div className="flex justify-between text-[10px] text-white/25 mb-2">
+                  <span>Progresso</span>
+                  <span>{config.progress}%</span>
+                </div>
+                <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                   <motion.div
-                    key={url}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.04 }}
-                    className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-white/5 cursor-pointer"
-                    onClick={() => setSelectedImage(url)}
-                  >
-                    <Image
-                      src={url}
-                      alt={`Foto profissional ${i + 1}`}
-                      fill
-                      className="object-cover transition group-hover:scale-105"
-                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition flex items-center justify-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleDownloadOne(url, i)
-                        }}
-                        className="opacity-0 group-hover:opacity-100 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-lg px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        Baixar
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {/* CTA for more */}
-            <div className="text-center mt-12 p-8 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
-              <p className="text-white/50 text-sm mb-4">
-                Gostou das fotos? Compartilhe com seus amigos e ganhe fotos grátis.
-              </p>
-              <Link href="/">
-                <ShimmerButton
-                  className="text-sm font-bold px-8 py-3"
-                  shimmerColor="#FFB340"
-                  background="#FF7A1A"
-                >
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  Criar novo pacote de fotos
-                </ShimmerButton>
-              </Link>
-            </div>
-          </>
+                    className="h-full bg-[#FF7A1A] rounded-full"
+                    animate={{ width: `${config.progress}%` }}
+                    transition={{ duration: 1.2, ease: 'easeOut' }}
+                  />
+                </div>
+                <p className="text-[11px] text-white/20 mt-3">
+                  Você pode fechar esta aba — enviaremos um e-mail quando as fotos ficarem prontas.
+                </p>
+              </div>
+            )}
+          </div>
         )}
 
-        {/* Waiting state with placeholder grid */}
-        {order.status !== 'done' && order.status !== 'failed' && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div
-                key={i}
-                className="aspect-[3/4] rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center"
+        {/* Done header */}
+        {isDone && order.resultImages.length > 0 && (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
+              <div>
+                <p className="text-base font-semibold">
+                  {order.resultImages.length} fotos prontas
+                </p>
+                <p className="text-sm text-white/35">Clique em qualquer foto para ampliar e baixar</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href)
+                  toast.success('Link copiado.')
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.08] text-sm font-medium text-white/60 hover:text-white transition-colors"
               >
-                <ImageIcon className="w-6 h-6 text-white/10" />
+                <Share2 className="w-4 h-4" />
+                Compartilhar
+              </button>
+              <button
+                onClick={downloadAll}
+                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-[#FF7A1A] hover:bg-[#FF8C36] text-white text-sm font-semibold transition-colors shadow-[0_4px_20px_rgba(255,122,26,0.2)]"
+              >
+                <Download className="w-4 h-4" />
+                Baixar todas
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Image grid */}
+        {isDone && order.resultImages.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <AnimatePresence>
+              {order.resultImages.map((url, i) => (
+                <motion.div
+                  key={url}
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.03, duration: 0.2 }}
+                  className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-white/[0.04] border border-white/[0.06] cursor-pointer"
+                  onClick={() => setLightbox(url)}
+                >
+                  <Image
+                    src={url}
+                    alt={`Foto ${i + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors" />
+                  <button
+                    onClick={e => { e.stopPropagation(); downloadOne(url, i) }}
+                    className="absolute bottom-2.5 right-2.5 opacity-0 group-hover:opacity-100 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-black/60 backdrop-blur-sm hover:bg-black/80 text-white text-[11px] font-semibold transition-all"
+                  >
+                    <Download className="w-3 h-3" />
+                    Baixar
+                  </button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        ) : !isDone ? (
+          /* Skeleton grid while waiting */
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="aspect-[3/4] rounded-xl bg-white/[0.03] border border-white/[0.04] flex items-center justify-center">
+                <ImageIcon className="w-5 h-5 text-white/[0.06]" />
               </div>
             ))}
+          </div>
+        ) : null}
+
+        {/* CTA after done */}
+        {isDone && (
+          <div className="mt-12 pt-10 border-t border-white/[0.06] text-center">
+            <p className="text-sm text-white/30 mb-4">Quer um novo pacote de fotos com outro estilo?</p>
+            <Link
+              href="/wizard"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.08] text-sm font-semibold text-white/60 hover:text-white transition-colors"
+            >
+              Criar novo pacote
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         )}
       </div>
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
+        {lightbox && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+            onClick={() => setLightbox(null)}
           >
             <motion.div
-              initial={{ scale: 0.9 }}
+              initial={{ scale: 0.92 }}
               animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="relative max-w-lg w-full aspect-[3/4]"
-              onClick={(e) => e.stopPropagation()}
+              exit={{ scale: 0.92 }}
+              transition={{ duration: 0.18 }}
+              className="relative max-w-sm w-full aspect-[3/4]"
+              onClick={e => e.stopPropagation()}
             >
               <Image
-                src={selectedImage}
-                alt="Foto profissional"
+                src={lightbox}
+                alt="Foto"
                 fill
                 className="object-cover rounded-2xl"
-                sizes="512px"
+                sizes="400px"
               />
-              <button
-                onClick={() => handleDownloadOne(selectedImage, 0)}
-                className="absolute bottom-4 right-4 bg-[#FF7A1A] hover:bg-[#FF9944] text-white rounded-xl px-4 py-2 text-sm font-bold flex items-center gap-2 transition"
-              >
-                <Download className="w-4 h-4" />
-                Baixar
-              </button>
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center transition text-lg font-bold"
-              >
-                ×
-              </button>
+              <div className="absolute bottom-3 inset-x-3 flex items-center justify-between gap-2">
+                <button
+                  onClick={() => downloadOne(lightbox, 0)}
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#FF7A1A] hover:bg-[#FF8C36] text-white text-sm font-semibold transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Baixar foto
+                </button>
+                <button
+                  onClick={() => setLightbox(null)}
+                  className="w-10 h-10 rounded-xl bg-black/60 hover:bg-black/80 text-white/60 hover:text-white flex items-center justify-center text-lg transition-colors"
+                >
+                  ×
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
